@@ -79,18 +79,18 @@ describe('Validation', function () {
         var server = new Hapi.Server();
         server.route({
             method: 'GET',
-            path: '/{seq}',
-            handler: function (request, reply) { reply(request.params.seq + 1); },
+            path: '/',
+            handler: function (request, reply) { reply(request.query.n + 1); },
             config: {
                 validate: {
-                    path: {
-                        seq: Hapi.types.number()
+                    query: {
+                        n: Hapi.types.number()
                     }
                 }
             }
         });
 
-        server.inject('/10', function (res) {
+        server.inject('/?n=10', function (res) {
 
             expect(res.statusCode).to.equal(200);
             expect(res.result).to.equal(11)
